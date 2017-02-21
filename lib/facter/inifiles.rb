@@ -6,7 +6,7 @@ Facter.add(:phpextinifiles) do
     unless output.nil?
       output.split("\n").each do |file|
         extension = file.scan(/^[0-9-]*(.+)\.ini/).last.first
-        unless extension.nill?
+        unless extension.nil?
           files[extension] = file
         end
       end
