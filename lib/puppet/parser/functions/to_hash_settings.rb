@@ -30,9 +30,9 @@ EOS
 
     raise(Puppet::ParseError, 'to_hash_settings(): Requires hash to work with') unless hash.is_a?(Hash)
 
-    return hash.inject({}) do |kv, acc|
+    return hash.inject({}) do |acc, kv|
       acc[id + kv[0]] = { 'key' => kv[0], 'value' => kv[1] }
-      kv
+      acc
     end
   end
 end
