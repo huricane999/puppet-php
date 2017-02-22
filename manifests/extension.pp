@@ -183,10 +183,12 @@ define php::extension (
   $inifiles = parsejson($::phpextinifiles)
 
   if has_key($inifiles, $lowercase_title) {
-    $config_filename = "${::phpextinifiles[$lowercase_title]}"
+    $config_filename = ::phpextinifiles[$lowercase_title]
   } else {
     $config_filename = "${config_root_ini}/${lowercase_title}.ini"
   }
+
+  notify { "${lowercase_title} ini file: ${config_filename}": }
 
   $config_root_ini = pick_default($::php::config_root_ini, $::php::params::config_root_ini)
   ::php::config { $title:
