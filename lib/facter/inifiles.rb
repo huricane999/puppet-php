@@ -1,3 +1,5 @@
+require 'json'
+
 Facter.add(:phpextinifiles) do
   setcode do
     output = Facter::Util::Resolution.exec('php -r "echo str_replace(\',\', \'\', php_ini_scanned_files());"')
@@ -12,6 +14,6 @@ Facter.add(:phpextinifiles) do
       end
     end
 
-    files
+    files.to_json
   end
 end
