@@ -1,8 +1,8 @@
-require 'json'
 
-Facter.add(:phpextinifiles) do
+Facter.add(:phpinifiles) do
   setcode do
     output = Facter::Util::Resolution.exec('php -r "echo str_replace(\',\', \'\', php_ini_scanned_files());"')
+    stringifyfacts = Facter::Util::Resolution.exec('puppet config print stringify_facts')
     files = {}
 
     unless output.nil?
@@ -16,6 +16,11 @@ Facter.add(:phpextinifiles) do
       end
     end
 
-    files.to_json
+    if stringifyfacts.to_s == 'true'
+      require 'json'
+      files.to_json
+    else
+      files
+    end
   end
 end
