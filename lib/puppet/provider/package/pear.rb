@@ -7,7 +7,7 @@ Puppet::Type.type(:package).provide :pear, :parent => Puppet::Provider::Package 
   has_feature :upgradeable
   has_feature :install_options
 
-  commands pear: 'pear'
+  commands :pear => 'pear'
 
   ENV['TERM'] = 'dumb' # remove colors
 
@@ -44,10 +44,10 @@ Puppet::Type.type(:package).provide :pear, :parent => Puppet::Provider::Package 
       state = Regexp.last_match(3)
 
       {
-        name: name,
-        vendor: channel,
-        ensure: state == 'stable' ? version : state,
-        provider: self.name
+        :name => name,
+        :vendor => channel,
+        :ensure => state == 'stable' ? version : state,
+        :provider => self.name
       }
     else
       Puppet.warning format('Could not match %s', desc)
@@ -80,7 +80,7 @@ Puppet::Type.type(:package).provide :pear, :parent => Puppet::Provider::Package 
     if @resource[:responsefile]
       Puppet::Util::Execution.execute(
         [command(:pear)] + command,
-        stdinfile: @resource[:responsefile]
+        :stdinfile => @resource[:responsefile]
       )
     else
       pear(*command)
