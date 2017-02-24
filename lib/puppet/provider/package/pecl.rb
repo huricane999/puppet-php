@@ -1,6 +1,6 @@
 require 'puppet/provider/package'
 
-Puppet::Type.type(:package).provide :pecl, parent: :pear do
+Puppet::Type.type(:package).provide :pecl, :parent => :pear do
   desc 'Package management via `pecl`.'
 
   has_feature :versionable
