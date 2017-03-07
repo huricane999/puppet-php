@@ -1,7 +1,7 @@
 
 Facter.add(:phpinifiles) do
   setcode do
-    output = Facter::Util::Resolution.exec('php -r "echo str_replace(\',\', \'\', php_ini_scanned_files());"')
+    output = Facter::Util::Resolution.exec('repoquery -l php* | grep -e ^/etc/php.d/.*\.ini')
     stringifyfacts = Facter::Util::Resolution.exec('puppet config print stringify_facts')
     files = {}
 
