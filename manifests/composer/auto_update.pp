@@ -43,11 +43,13 @@ class php::composer::auto_update (
     $env = [ 'HOME=/root' ]
   }
 
-  exec { 'update composer':
-    command     => "${path} --no-interaction --quiet self-update",
-    environment => $env,
-    onlyif      => "test `find '${path}' -mtime +${max_age}`",
-    path        => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin', '/usr/local/sbin' ],
-    require     => [File[$path], Class['::php::cli']],
+  if $::composerversion_installed and $::composerversion_latest and versioncmp($::composerversion_installed, $::composerversion_latest) < 0 {
+    exec { 'update composer':
+      command     => "${path} --no-interaction --quiet self-update",
+      environment => $env,
+      onlyif      => "test `find '${path}' -mtime +${max_age}`",
+      path        => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin', '/usr/local/sbin' ],
+      require     => [File[$path], Class['::php::cli']],
+    }
   }
 }
