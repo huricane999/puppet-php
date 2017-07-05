@@ -1,4 +1,4 @@
-Facter.add(:composerversion) do
+Facter.add(:composerversion_installed) do
   setcode do
     output = Facter::Util::Resolution.exec('composer -V')
 
@@ -9,7 +9,7 @@ Facter.add(:composerversion) do
   end
 end
 
-Facter.add(:composerlatest) do
+Facter.add(:composerversion_latest) do
   setcode do
     raw = Facter::Util::Resolution.exec('curl -s \'https://api.github.com/repos/composer/composer/releases/latest\'')
 
