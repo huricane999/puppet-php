@@ -6,7 +6,7 @@ Facter.add(:composerversion_installed) do
       output = Facter::Util::Resolution.exec('composer -V')
 
       unless output.nil?
-        output.split("\n").first.split(' ').
+        output.split(' ').
           select { |x| x =~ %r{^(?:(\d+)\.)(?:(\d+)\.)?(\*|\d+)} }.first
       end
     end
