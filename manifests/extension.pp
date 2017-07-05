@@ -184,10 +184,16 @@ define php::extension (
 
   $inifiles = parsejson($::phpinifiles, $::phpinifiles)
 
-  if $inifiles != nil and has_key($inifiles, $lowercase_title) and $inifiles[$lowercase_title] != nil {
-    $config_filename = $inifiles[$lowercase_title]
+  if 'pecl-' in $lowercase_title {
+    $ini_title = regsubst($lowercase_title, 'pecl-', '')
   } else {
-    $config_filename = "${config_root_ini}/${lowercase_title}.ini"
+    $ini_title = $lowercase_title
+  }
+
+  if $inifiles != nil and has_key($inifiles, $ini_title) and $inifiles[$ini_title] != nil {
+    $config_filename = $inifiles[$ini_title]
+  } else {
+    $config_filename = "${config_root_ini}/${ini_title}.ini"
   }
 
   ::php::config { $title:
