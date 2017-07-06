@@ -196,7 +196,7 @@ define php::extension (
     $config_filename = "${config_root_ini}/${ini_title}.ini"
   }
 
-  ::php::config { $title:
+  ::php::config { $ini_title:
     file    => $config_filename,
     config  => $final_settings,
     require => $package_depends,
